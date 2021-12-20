@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="5.0.13" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BowlingGame.AzureCosmos\BowlingGame.Data.AzureCosmos.csproj" />
+    <ProjectReference Include="..\BowlingGame.Data\BowlingGame.Data.SqlServer.csproj" />
+    <ProjectReference Include="..\BowlingGame.Service\BowlingGame.Service.csproj" />
+  </ItemGroup>
+
+</Project>
