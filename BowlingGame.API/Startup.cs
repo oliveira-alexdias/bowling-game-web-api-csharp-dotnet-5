@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using BowlingGame.API.Extensions;
 using BowlingGame.Infra.IoC.Core;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 
 namespace BowlingGame.API
 {
@@ -51,6 +53,8 @@ namespace BowlingGame.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseGlobalExceptionHandler();
 
             app.UseRouting();
 

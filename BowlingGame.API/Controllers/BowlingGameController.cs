@@ -32,7 +32,6 @@ namespace BowlingGame.API.Controllers
         public async Task<IActionResult> CreateGame([FromBody] CreateGameRequest request)
         {
             if (request.HasErrors()) return BadRequest(request.Errors);
-
             var gameModel = await gameService.CreateGame(request.PlayerName);
             return Ok(new CreateGameResponse(gameModel));
         }
@@ -41,6 +40,7 @@ namespace BowlingGame.API.Controllers
         public async Task<IActionResult> Roll([FromBody] RollRequest request)
         {
             if (request.HasErrors()) return BadRequest(request.Errors);
+            if (await gameService.GameNotFound(request.GameId)) return NotFound();
             await rollService.Roll(request.GameId, request.Score);
             return NoContent();
         }
@@ -48,6 +48,8 @@ namespace BowlingGame.API.Controllers
         [HttpGet("score/{gameId:guid}")]
         public async Task<IActionResult> GetScore(string gameId)
         {
+            if (await gameService.GameNotFound(gameId)) return NotFound();
+
             if (!cache.TryGetValue(gameId, out GetScoreResponse response))
             {
                 var memoryCacheOptions = new MemoryCacheEntryOptions()

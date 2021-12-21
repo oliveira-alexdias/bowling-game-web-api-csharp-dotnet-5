@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using BowlingGame.Service.Exceptions;
 using BowlingGame.Service.Extensions;
+using BowlingGame.Service.ObjectOfValues;
 
 namespace BowlingGame.Service.Entities
 {
@@ -46,12 +48,12 @@ namespace BowlingGame.Service.Entities
 
         public void SetStrike()
         {
-            Rolls[0].Score = 10;
+            Rolls[0].Score = Constants.MaxScore;
         }
 
         public void SetSpare()
         {
-            Rolls[1].Score = 10 - Rolls[0].Score;
+            Rolls[1].Score = Constants.MaxScore - Rolls[0].Score;
         }
 
         public void AddScoreToFirstRoll(string score)
@@ -61,6 +63,9 @@ namespace BowlingGame.Service.Entities
 
         public void AddScoreToSecondRoll(string score)
         {
+            var firstRollScore = Rolls[0].Score;
+            var secondRollScore = GetScoreValue(score);
+            if ((firstRollScore + secondRollScore > Constants.MaxScore) & !IsLastFrame()) throw new InvalidSumForFrameException();
             AddScoreToRoll(GetScoreValue(score), 1);
         }
 
@@ -78,7 +83,8 @@ namespace BowlingGame.Service.Entities
         {
             if (score.IsFailed()) return 0;
             if (score.IsStrike()) return 10;
-            return int.Parse(score);
+            var isInt = int.TryParse(score, out var scoreValue);
+            return isInt ? scoreValue : throw new InvalidScoreException(score);
         }
     }
 }

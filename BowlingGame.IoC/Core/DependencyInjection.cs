@@ -36,9 +36,9 @@ namespace BowlingGame.Infra.IoC.Core
 
             services.AddDbContext<AzureCosmosContext>(options =>
             {
-                options.UseCosmos(configuration["CosmosDb:CosmosEndPoint"],
-                                  configuration["CosmosDb:CosmosKey"],
-                                  configuration["CosmosDb:CosmosDatabase"]);
+                options.UseCosmos(configuration["AzureCosmosDb:EndPoint"],
+                                  configuration["AzureCosmosDb:AccountKey"],
+                                  configuration["AzureCosmosDb:Database"]);
             });
 
             services.AddScoped<AzureCosmosContext>();

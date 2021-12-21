@@ -7,5 +7,6 @@ namespace BowlingGame.Service.Interfaces
     public interface IGameService
     {
         Task<GameModel> CreateGame(string playerName);
+        Task<bool> GameNotFound(string gameId);
     }
 }

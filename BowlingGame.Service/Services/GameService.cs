@@ -22,5 +22,10 @@ namespace BowlingGame.Service.Services
             await gameRepository.AddAsync(game);
             return new GameModel(game.Id, game.PlayerName);
         }
+
+        public async Task<bool> GameNotFound(string gameId)
+        {
+            return (await gameRepository.GetByIdAsync(gameId)) is null;
+        }
     }
 }
