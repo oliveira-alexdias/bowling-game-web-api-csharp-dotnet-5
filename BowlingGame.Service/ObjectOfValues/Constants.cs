@@ -5,6 +5,7 @@
         public const int MaxScore = 10;
         public const int NumberOfFrames = 10;
         public const int LastFrameOrder = NumberOfFrames;
+        public const string NoSqlDatabase = "nosql";
 
     }
 }
