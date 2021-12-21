@@ -58,6 +58,7 @@ namespace BowlingGame.Service.Entities
 
         public void AddScoreToFirstRoll(string score)
         {
+            if (score.IsSpare()) throw new InvalidScoreException(score);
             AddScoreToRoll(GetScoreValue(score), 0);
         }
 
@@ -65,12 +66,14 @@ namespace BowlingGame.Service.Entities
         {
             var firstRollScore = Rolls[0].Score;
             var secondRollScore = GetScoreValue(score);
-            if ((firstRollScore + secondRollScore > Constants.MaxScore) & !IsLastFrame()) throw new InvalidSumForFrameException();
+            if ((firstRollScore + secondRollScore > Constants.MaxScore) && !IsLastFrame()) throw new InvalidSumForFrameException();
+            if (score.IsStrike() && !IsLastFrame()) throw new InvalidScoreException(score);
             AddScoreToRoll(GetScoreValue(score), 1);
         }
 
         public void AddScoreToThirdRoll(string score)
         {
+            if (score.IsSpare()) throw new InvalidScoreException(score);
             AddScoreToRoll(GetScoreValue(score), 2);
         }
 
